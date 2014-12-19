@@ -11,5 +11,7 @@
  * file per style scope.
  *
  *= require_tree .
+ *= require formbuilder/vendor/css/vendor
+ *= require formbuilder/dist/formbuilder
  *= require_self
  */
