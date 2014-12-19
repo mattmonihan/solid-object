@@ -26,11 +26,24 @@
       fields: formConfig.fields
     };
 
-    console.dir("This is what your model looks will look like" + modelConfig);
+    console.log("This is what your model looks will look like " + modelConfig);
 
     $.ajax({
-      url: 
+      type: 'POST',
+      url: '/models/',
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      data: JSON.stringify(modelConfig),
+      contentType: "application/json",
+      dataType: "json"
     })
+
+    .done(function() { 
+      console.log('success'); 
+    })
+
+    .fail(function() { 
+      console.log('fail');
+    });
   });
 </script>
 
