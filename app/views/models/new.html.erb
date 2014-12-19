@@ -1,0 +1,36 @@
+<label>Model Name</label>
+<input class="model-name" type="text"></input>
+
+<div id='formbuilder'></div>
+
+<button class="submit-model"> Done</button>
+
+<script>
+  $modelName = $('.model-name');
+  $submitButton = $('.submit-model')
+
+  var formConfig = null;
+
+  var formbuilder = new Formbuilder({ selector: '#formbuilder' });
+
+  formbuilder.on('save', function(payload){
+    formConfig = JSON.parse(payload);
+
+  })
+
+  $submitButton.click(function(event) {
+    modelName = $modelName.val();
+
+    modelConfig = {
+      modelName: modelName,
+      fields: formConfig.fields
+    };
+
+    console.dir("This is what your model looks will look like" + modelConfig);
+
+    $.ajax({
+      url: 
+    })
+  });
+</script>
+

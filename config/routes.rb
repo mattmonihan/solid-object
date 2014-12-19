@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
-  get 'home/index'
+  # You can have the root of your site routed with "root"
+  root 'home#index'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
+  
+  get 'home/index'
 
-  # You can have the root of your site routed with "root"
-  root 'home#index'
+  resources :models
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
