@@ -32,7 +32,5 @@ gem 'pry-nav',        group: :development
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-
 gem 'mongoid', '4.0.0'
-
 gem 'bower-rails', '0.9.2'
