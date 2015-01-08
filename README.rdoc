@@ -3,16 +3,20 @@
 This README documents steps that are necessary to get the
 application up and running.
 
-* Ruby version
-
 * System dependencies
+  MongoDB
 
 * Configuration
 
 * Database creation
   Install MongoDB (http://docs.mongodb.org/manual/installation/)
+  Run MongoDB Server (Usually by running the 'mongod' command)
 
 * Database initialization
+  Initialize mongo indexes (rake db:mongoid:create_indexes)
+
+* Application Server
+  Run the app with the 'rails server' command
 
 * How to run the test suite
 
