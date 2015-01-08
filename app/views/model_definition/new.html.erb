@@ -26,7 +26,8 @@
       fields: formConfig.fields
     };
 
-    console.log("This is what your model looks will look like " + modelConfig);
+    console.log("This is what your model looks will look like: ");
+    console.dir(modelConfig);
 
     $.ajax({
       type: 'POST',
@@ -39,8 +40,8 @@
 
     .done(function() { 
       console.log('success'); 
+      window.location.href = '/model_definition/'
     })
-
     .fail(function() { 
       console.log('fail');
     });

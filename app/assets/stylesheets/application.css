@@ -13,5 +13,6 @@
  *= require_tree .
  *= require formbuilder/vendor/css/vendor
  *= require formbuilder/dist/formbuilder
+ *= require bootstrap 
  *= require_self
  */

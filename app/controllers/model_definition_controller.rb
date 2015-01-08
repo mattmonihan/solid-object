@@ -1,5 +1,6 @@
 class ModelDefinitionController < ApplicationController
   def index
+    @model_definitions = ModelDefinition.all
   end
 
   def show
@@ -20,7 +21,7 @@ class ModelDefinitionController < ApplicationController
     )
 
     if @model_definition.save
-      render action: 'show', status: :created, location: @model_definition
+      render json: @model_definition, status: :created
     end
   end
 
