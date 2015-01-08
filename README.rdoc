@@ -16,7 +16,8 @@ application up and running.
   Initialize mongo indexes (rake db:mongoid:create_indexes)
 
 * Application Server
-  Run the app with the 'rails server' command
+  Fetch the client-side dependencies with `rake bower:install`
+  Run the app with the `rails server` command
 
 * How to run the test suite
 
