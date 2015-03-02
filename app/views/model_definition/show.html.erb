@@ -71,8 +71,9 @@
       )
     );
 
-    hljs.initHighlightingOnLoad();
-
+    $('pre code').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
 
     $('input#submit').click(function(){
       $('#thisForm').get(0).setAttribute('action', $('#form-action').val());
