@@ -4,6 +4,9 @@
     <title>SolidObject</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
     <%= csrf_meta_tags %>
   </head>
   <body>
@@ -12,5 +15,7 @@
     <div class="container">
       <%= yield %>
     </div>
+
+    <br><br><br>
   </body>
 </html>

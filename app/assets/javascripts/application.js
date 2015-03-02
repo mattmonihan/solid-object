@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap
 //= require formbuilder/vendor/js/vendor
 //= require formbuilder/dist/formbuilder
 //= require_tree .
