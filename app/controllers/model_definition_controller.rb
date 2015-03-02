@@ -29,6 +29,8 @@ class ModelDefinitionController < ApplicationController
   end
 
   def destroy
+    # @model_definition = ModelDefinition.find(params['id'])
+    # @model_definition.destroy
   end
 
   private

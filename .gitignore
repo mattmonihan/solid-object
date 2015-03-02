@@ -10,6 +10,12 @@
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
+/db/journal
+/db/local.0
+/db/local.ns
+/db/mongod.lock
+/db/solid_object_development.*
+
 
 # Ignore all logfiles and tempfiles.
 /log/*.log

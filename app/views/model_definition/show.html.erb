@@ -1,1 +1,40 @@
-Hello World
+<!-- <%= @model_definition.field_definitions.inspect %> -->
+
+<%= link_to "Back to forms", controller: "model_definition", action: "index" %>
+
+<h1><%= @model_definition.label %></h1>
+
+<form id="thisForm">
+  <fieldset>
+    <% @model_definition.field_definitions.each do |field_definition| %>
+      <div class="form-group">
+        <label><%= field_definition.label %></label>
+        <% if field_definition.field_type == "text" %>
+          <input type="text" class="form-control">
+        <% elsif field_definition.field_type == "paragraph" %>
+          <textarea rows="5" class="form-control"></textarea>
+        <% end %>
+      </div>
+    <% end %>
+
+  </fieldset>
+
+  <hr>
+
+  <fieldset>
+    <div class="form-group">
+      <label>Submit this form to:
+        <input type="text" placeholder="http://url.com" class="form-control col-lg-6">
+      </label>
+    </div>
+
+      <input type="submit" value="Submit" class="btn btn-success col-lg-1" >
+
+  </fieldset>
+
+</form>
+
+
+<script>
+
+</script>

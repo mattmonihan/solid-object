@@ -3,22 +3,27 @@
 </div>
 
 <div class="row">
-  <h1><u>Models</u></h1>
+  <h1>Models</h1>
 
   <% if @model_definitions.size == 0 %>
     No Models found.
     <%= link_to 'Click here', new_model_definition_path %> to make a new one.
   <% end %>
 
+  <table class="table">
   <% @model_definitions.each do |model_definition| %>
-    <div>
-       <h2><%= model_definition.label %></h2>
-       <h3>Fields: </h3>
-        <ul>
-          <% model_definition.field_definitions.each do |field_definition| %>
-            <li><h4><%= field_definition.label %>, type '<%= field_definition.field_type %>'</li>
-          <% end %>
-        </ul>
-    </div>
+    <tr>
+       <td>
+         <%= link_to model_definition.label, model_definition_path(model_definition) %>
+       </td>
+       <td>
+         <%= link_to "Edit" %>
+       </td>
+       <td>
+         <!-- Doesn't work yet -->
+         <%= link_to "Delete", controller: "model_definition", action: "destroy", id: model_definition.id %>
+       </td>
+    </tr>
   <% end %>
+  </table>
 </div>
