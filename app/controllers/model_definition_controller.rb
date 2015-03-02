@@ -44,7 +44,10 @@ class ModelDefinitionController < ApplicationController
         {
           label: config['label'],
           name: config['label'].to_underscore,
-          field_type: config['field_type']
+          field_type: config['field_type'],
+          field_options: config['field_options'],
+          required: config['required']
+
         }
       end
     }
