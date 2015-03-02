@@ -17,7 +17,7 @@
          <%= link_to model_definition.label, model_definition_path(model_definition) %>
        </td>
        <td>
-         <%= link_to "Edit" %>
+         <%= link_to "Edit", controller: "model_definition", action: "edit", id: model_definition.id  %>
        </td>
        <td>
          <!-- Doesn't work yet -->

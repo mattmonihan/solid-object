@@ -8,9 +8,11 @@ class ModelDefinitionController < ApplicationController
   end
 
   def new
+    render :edit
   end
 
   def edit
+    @model_definition = ModelDefinition.find(params['id'])
   end
 
   def create

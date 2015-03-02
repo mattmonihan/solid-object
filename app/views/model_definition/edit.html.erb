@@ -11,7 +11,9 @@
 
   var formConfig = null;
 
-  var formbuilder = new Formbuilder({ selector: '#formbuilder' });
+  var boostrapData = <%= @model_definition ? @model_definition.field_definitions.to_json.html_safe : "[]" %>
+
+  var formbuilder = new Formbuilder({ selector: '#formbuilder', bootstrapData: boostrapData });
 
   formbuilder.on('save', function(payload){
     formConfig = JSON.parse(payload);
