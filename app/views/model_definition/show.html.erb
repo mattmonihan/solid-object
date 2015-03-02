@@ -4,15 +4,16 @@
 
 <h1><%= @model_definition.label %></h1>
 
-<form id="thisForm">
+<form id="thisForm" accept-charset="UTF-8" action="/" method="POST">
+  <input type="hidden" name="utf8" value="✓">
   <fieldset>
     <% @model_definition.field_definitions.each do |field_definition| %>
       <div class="form-group">
         <label><%= field_definition.label %></label>
         <% if field_definition.field_type == "text" %>
-          <input type="text" class="form-control">
+          <input type="text" name="<%= field_definition.label.to_underscore %>" class="form-control">
         <% elsif field_definition.field_type == "paragraph" %>
-          <textarea rows="5" class="form-control"></textarea>
+          <textarea rows="5" name="<%= field_definition.label.to_underscore %>" class="form-control"></textarea>
         <% end %>
       </div>
     <% end %>
@@ -24,17 +25,21 @@
   <fieldset>
     <div class="form-group">
       <label>Submit this form to:
-        <input type="text" placeholder="http://url.com" class="form-control col-lg-6">
+        <input type="text" placeholder="http://url.com" value="https://formkeep.com/f/c425fedae539" id="form-action" class="form-control col-lg-6">
       </label>
     </div>
 
-      <input type="submit" value="Submit" class="btn btn-success col-lg-1" >
-
+      <input type="submit" value="Submit" id="submit" class="btn btn-success col-lg-1" >
   </fieldset>
 
 </form>
 
 
-<script>
+<script type="text/javascript">
+  $(function(){
+    $('input#submit').click(function(){
+      $('#thisForm').get(0).setAttribute('action', $('#form-action').val());
+    });
 
+  });
 </script>
