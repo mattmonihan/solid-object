@@ -1,9 +1,105 @@
-<label>Model Name</label>
-<input class="model-name" type="text"></input>
+<!-- <%= @model_definition.field_definitions.inspect %> -->
 
-<div id='formbuilder'></div>
+<%= link_to "Back to forms", controller: "model_definition", action: "index" %>
+<br><br>
+<div class="form-group">
+  <label>Form
+    <input class="model-name form-control" value="<%= @model_definition.label %>" type="text"></input>
+  </label>
+</div>
+<br>
 
-<button class="submit-model"> Done</button>
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+   <ul class="nav nav-tabs" role="tablist">
+     <li role="presentation" class="active"><a href="#builder-tab" aria-controls="builder-tab" role="tab" data-toggle="tab">Builder</a></li>
+     <li role="presentation" ><a href="#preview-tab" aria-controls="preview-tab" role="tab" data-toggle="tab">Preview</a></li>
+     <li role="presentation"><a href="#markup-tab" aria-controls="markup-tab" role="tab" data-toggle="tab">Markup</a></li>
+   </ul>
+
+
+   <br>
+
+   <!-- Tab panes -->
+   <div class="tab-content">
+
+
+     <div role="tabpanel" class="tab-pane fade in active" id="builder-tab">
+       <div id='formbuilder'></div>
+
+       <button class="submit-model"> Done</button>
+     </div><!-- .tab-pane -->
+
+      <div role="tabpanel" class="tab-pane fade" id="preview-tab">
+
+        <form id="thisForm" accept-charset="UTF-8" action="/" method="POST">
+          <input type="hidden" name="utf8" value="✓">
+          <fieldset>
+            <% @model_definition.field_definitions.each do |field_definition| %>
+              <div class="form-group">
+                <label><%= field_definition.label %></label>
+                <% if field_definition.field_type == "text" %>
+                  <input type="text" name="<%= field_definition.label.to_underscore %>" class="form-control">
+                <% elsif field_definition.field_type == "paragraph" %>
+                  <textarea rows="5" name="<%= field_definition.label.to_underscore %>" class="form-control"></textarea>
+                <% end %>
+              </div>
+            <% end %>
+
+          </fieldset>
+
+          <hr>
+
+          <fieldset>
+            <div class="form-group">
+              <label>Submit this form to:
+                <input type="text" placeholder="http://url.com" value="https://formkeep.com/f/c425fedae539" id="form-action" class="form-control col-lg-6">
+              </label>
+            </div>
+
+              <input type="submit" value="Submit" id="submit" class="btn btn-success col-lg-1" >
+          </fieldset>
+
+        </form>
+      </div><!-- .tab-pane -->
+
+      <div role="tabpanel" class="tab-pane fade" id="markup-tab">
+        <br>
+        <pre id="markup"><code class="html"></code></pre>
+      </div><!-- .tab-pane -->
+
+    </div><!-- .tab-content -->
+
+</div><!-- tabpanel -->
+
+<script type="text/javascript">
+  $(function(){
+
+
+    $('#markup').find('code').html(
+      htmlEntities(
+        $('#thisForm').parent().html()
+      )
+    );
+
+    $('pre code').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+
+    $('input#submit').click(function(){
+      $('#thisForm').get(0).setAttribute('action', $('#form-action').val());
+    });
+
+
+    function htmlEntities(str) {
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+  });
+</script>
+
+
 
 <script>
   $modelName = $('.model-name');

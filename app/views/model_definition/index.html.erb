@@ -3,7 +3,7 @@
 </div>
 
 <div class="row">
-  <h1>Models</h1>
+  <h1>Forms</h1>
 
   <% if @model_definitions.size == 0 %>
     No Models found.
@@ -14,7 +14,10 @@
   <% @model_definitions.each do |model_definition| %>
     <tr>
        <td>
-         <%= link_to model_definition.label, model_definition_path(model_definition) %>
+         <%= model_definition.label %>
+       </td>
+       <td>
+         <%= link_to "Add new", model_definition_path(model_definition) %>
        </td>
        <td>
          <%= link_to "Edit", controller: "model_definition", action: "edit", id: model_definition.id  %>

@@ -8,6 +8,7 @@ class ModelDefinitionController < ApplicationController
   end
 
   def new
+    @model_definition = ModelDefinition.new()
     render :edit
   end
 
