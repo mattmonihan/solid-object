@@ -1,13 +1,15 @@
 <div class="row">
-    <%= link_to 'Create a new Model', new_model_definition_path, class: 'btn btn-primary pull-right' %>
+
 </div>
 
 <div class="row">
-  <h1>Forms</h1>
+  <h1 class="col-xs-3" style="margin-top: 0px;">Forms</h1>
 
   <% if @model_definitions.size == 0 %>
     No Models found.
     <%= link_to 'Click here', new_model_definition_path %> to make a new one.
+  <% else %>
+    <%= link_to 'Create a new Model', new_model_definition_path, class: 'btn btn-primary pull-right col-xs-2' %>
   <% end %>
 
   <table class="table">
@@ -20,11 +22,11 @@
          <%= link_to "Add new record", model_definition_path(model_definition) %>
        </td>
        <td>
-         <%= link_to "Edit", controller: "model_definition", action: "edit", id: model_definition.id  %>
+         <%= link_to "Edit form", controller: "model_definition", action: "edit", id: model_definition.id  %>
        </td>
        <td>
          <!-- Doesn't work yet -->
-         <%= link_to "Delete", controller: "model_definition", action: "destroy", id: model_definition.id %>
+         <%= link_to "Delete form", model_definition_path(model_definition), method: :delete, data: { confirm: 'Are you sure?' } %>
        </td>
     </tr>
   <% end %>

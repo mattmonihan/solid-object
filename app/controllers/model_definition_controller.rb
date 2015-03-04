@@ -32,8 +32,13 @@ class ModelDefinitionController < ApplicationController
   end
 
   def destroy
-    # @model_definition = ModelDefinition.find(params['id'])
-    # @model_definition.destroy
+    @model_definition = ModelDefinition.find(params['id'])
+    if @model_definition.destroy
+      respond_to do |format|
+        format.html { redirect_to action: "index" }
+        format.json  { head :ok }
+      end
+    end
   end
 
   private
