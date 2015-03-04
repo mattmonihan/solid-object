@@ -3,8 +3,16 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+.tab-pane{
+  padding: 20px;
+}
+
 .tab-pane#builder-tab{
-  padding-top: 10px;
+  padding: 0px;
+  .validation{
+    border-radius: 0px;
+    margin: 0px;
+  }
 }
 
 #formbuilder{

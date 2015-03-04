@@ -3,8 +3,8 @@
 <%= link_to "Back to forms", {controller: "model_definition", action: "index"}, class: "btn btn-default" %>
 <br><br>
 <div class="form-group model-name">
-  <label class="control-label">Form
-    <input class="model-name form-control" value="<%= @model_definition.label %>" type="text" placeholder="Enter a form name"></input>
+  <label class="control-label">Form Name
+    <input class="model-name form-control" value="<%= @model_definition.label ? @model_definition.label : 'Untitled Form' %>" type="text" placeholder="Enter a form name"></input>
   </label>
   <span class="text-danger validation validation-model-name">Needs a name!</span>
 </div>
@@ -15,8 +15,9 @@
   <!-- Nav tabs -->
    <ul class="nav nav-tabs" role="tablist">
      <li role="presentation" class="active"><a href="#builder-tab" aria-controls="builder-tab" role="tab" data-toggle="tab">Builder</a></li>
-     <li role="presentation" ><a href="#preview-tab" aria-controls="preview-tab" role="tab" data-toggle="tab">Preview</a></li>
+     <li role="presentation" ><a class="btn disabled" href="#preview-tab" aria-controls="preview-tab" role="tab" data-toggle="tab">Preview</a></li>
      <li role="presentation"><a href="#markup-tab" aria-controls="markup-tab" role="tab" data-toggle="tab">Markup</a></li>
+     <li role="presentation"><a href="#settings-tab" aria-controls="settings-tab" role="tab" data-toggle="tab">Settings</a></li>
    </ul>
 
    <!-- Tab panes -->
@@ -25,10 +26,10 @@
 
      <div role="tabpanel" class="tab-pane fade in active" id="builder-tab">
 
-       <div class="alert alert-warning validation validation-fields" style="margin: 0px 10px;" role="alert">You'll need to add some fields first.</div>
+       <div class="alert alert-warning validation validation-fields" role="alert">You'll need to add some fields first.</div>
 
        <div class="btn-group pull-right">
-         <button class="submit-model btn btn-primary">Save Model</button>
+         <button class="submit-model btn btn-primary">Save Form</button>
        </div>
 
        <div id='formbuilder'></div>
@@ -73,6 +74,13 @@
         <pre id="markup"><code class="html"></code></pre>
       </div><!-- .tab-pane -->
 
+      <div role="tabpanel" class="tab-pane fade" id="settings-tab">
+        <h2>Webhooks <small>Coming soon!</small></h2>
+        <input disabled placeholder="http://example.com" type="url"><button disabled class="btn btn-link">Add another</button>
+        <br>
+        <button class="btn btn-sm btn-default" disabled>Save webhooks</button>
+      </div><!-- .tab-pane -->
+
     </div><!-- .tab-content -->
 
 </div><!-- tabpanel -->
@@ -108,18 +116,22 @@
 <script>
 
   $(function(){
-    $modelName = $('.model-name');
+    $modelName = $('input.model-name');
     $submitButton = $('.submit-model')
 
     var formConfig = null;
 
-    var boostrapData = <%= @model_definition ? @model_definition.field_definitions.to_json.html_safe : "[]" %>
+    var bootstrapData = <%= @model_definition ? @model_definition.field_definitions.to_json.html_safe : "[]" %>
 
-    var formbuilder = new Formbuilder({ selector: '#formbuilder', bootstrapData: boostrapData });
+    var formbuilder = new Formbuilder({ selector: '#formbuilder', bootstrapData: bootstrapData });
 
     formbuilder.on('save', function(payload){
       formConfig = JSON.parse(payload);
     })
+
+    if (bootstrapData.length > 0){
+      $('.nav-tabs .btn').removeClass('disabled');
+    }
 
     $('.validation').hide();
 
@@ -141,6 +153,8 @@
         return;
       }
 
+      // Remove the disabled class from the preview if it's disabled.
+      $('.nav-tabs .btn').removeClass('disabled');
 
       modelConfig = {
         modelName: modelName,
