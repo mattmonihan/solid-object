@@ -1,11 +1,12 @@
 <!-- <%= @model_definition.field_definitions.inspect %> -->
 
-<%= link_to "Back to forms", controller: "model_definition", action: "index" %>
+<%= link_to "Back to forms", {controller: "model_definition", action: "index"}, class: "btn btn-default" %>
 <br><br>
-<div class="form-group">
-  <label>Form
-    <input class="model-name form-control" value="<%= @model_definition.label %>" type="text"></input>
+<div class="form-group model-name">
+  <label class="control-label">Form
+    <input class="model-name form-control" value="<%= @model_definition.label %>" type="text" placeholder="Enter a form name"></input>
   </label>
+  <span class="text-danger validation validation-model-name">Needs a name!</span>
 </div>
 <br>
 
@@ -18,17 +19,20 @@
      <li role="presentation"><a href="#markup-tab" aria-controls="markup-tab" role="tab" data-toggle="tab">Markup</a></li>
    </ul>
 
-
-   <br>
-
    <!-- Tab panes -->
-   <div class="tab-content">
+   <div class="tab-content" style="border: 1px #ddd solid; border-top: 0;">
 
 
      <div role="tabpanel" class="tab-pane fade in active" id="builder-tab">
+
+       <div class="alert alert-warning validation validation-fields" style="margin: 0px 10px;" role="alert">You'll need to add some fields first.</div>
+
+       <div class="btn-group pull-right">
+         <button class="submit-model btn btn-primary">Save Model</button>
+       </div>
+
        <div id='formbuilder'></div>
 
-       <button class="submit-model"> Done</button>
      </div><!-- .tab-pane -->
 
       <div role="tabpanel" class="tab-pane fade" id="preview-tab">
@@ -102,46 +106,67 @@
 
 
 <script>
-  $modelName = $('.model-name');
-  $submitButton = $('.submit-model')
 
-  var formConfig = null;
+  $(function(){
+    $modelName = $('.model-name');
+    $submitButton = $('.submit-model')
 
-  var boostrapData = <%= @model_definition ? @model_definition.field_definitions.to_json.html_safe : "[]" %>
+    var formConfig = null;
 
-  var formbuilder = new Formbuilder({ selector: '#formbuilder', bootstrapData: boostrapData });
+    var boostrapData = <%= @model_definition ? @model_definition.field_definitions.to_json.html_safe : "[]" %>
 
-  formbuilder.on('save', function(payload){
-    formConfig = JSON.parse(payload);
+    var formbuilder = new Formbuilder({ selector: '#formbuilder', bootstrapData: boostrapData });
 
-  })
-
-  $submitButton.click(function(event) {
-    modelName = $modelName.val();
-
-    modelConfig = {
-      modelName: modelName,
-      fields: formConfig.fields
-    };
-
-    console.log("This is what your model looks will look like: ");
-    console.dir(modelConfig);
-
-    $.ajax({
-      type: 'POST',
-      url: '/model_definition/',
-      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-      data: JSON.stringify(modelConfig),
-      contentType: "application/json",
-      dataType: "json"
+    formbuilder.on('save', function(payload){
+      formConfig = JSON.parse(payload);
     })
 
-    .done(function() {
-      console.log('success');
-      window.location.href = '/model_definition/'
-    })
-    .fail(function() {
-      console.log('fail');
+    $('.validation').hide();
+
+    $submitButton.click(function(event) {
+      modelName = $modelName.val();
+
+      $('.validation').hide();
+      $('.form-group.model-name').removeClass('has-warning has-feedback');
+
+      // validate some stuff
+      if(formConfig == null){
+        $('.validation.validation-fields').show();
+        console.log('No fields.');
+        return;
+      }else if(modelName == "" || modelName == null){
+        $('.validation.validation-model-name').show();
+        $('.form-group.model-name').addClass('has-warning has-feedback');
+        console.log('No model name.');
+        return;
+      }
+
+
+      modelConfig = {
+        modelName: modelName,
+        fields: formConfig.fields
+      };
+
+      console.log("This is what your model looks will look like: ");
+      console.dir(modelConfig);
+
+      $.ajax({
+        type: 'POST',
+        url: '/model_definition/',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: JSON.stringify(modelConfig),
+        contentType: "application/json",
+        dataType: "json"
+      })
+
+      .done(function() {
+        console.log('success');
+        window.location.href = '/model_definition/'
+      })
+      .fail(function() {
+        console.log('fail');
+      });
     });
+
   });
 </script>
